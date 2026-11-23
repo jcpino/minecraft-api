@@ -8,6 +8,7 @@ import java.util.List;
 
 @RestController // "Soy un bloque de comandos que responde peticiones web (JSON)"
 @RequestMapping("/api/jugadores") // La ruta base (como si fuera /api/jugadores)
+@CrossOrigin(origins = "*")
 public class JugadorController {
 
     private final JugadorService jugadorService;
@@ -33,5 +34,11 @@ public class JugadorController {
     @PostMapping
     public Jugador crearJugador(@RequestBody Jugador nuevoJugador) {
         return jugadorService.guardarJugador(nuevoJugador);
+    }
+
+    // 4. BANEAR (PUT) - http://localhost:8080/api/jugadores/3/banear
+    @PutMapping("/{id}/banear")
+    public Jugador banearJugador(@PathVariable Long id) {
+        return jugadorService.banearJugador(id);
     }
 }

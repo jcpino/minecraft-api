@@ -55,4 +55,13 @@ public class JugadorService {
         // Finalmente, el repositorio hace el INSERT (si es nuevo) o el UPDATE (si ya existía)
         return jugadorRepository.save(jugadorNuevo);
     }
+
+    public Jugador banearJugador(Long id) {
+        return jugadorRepository.findById(id).map(jugador -> {
+            jugador.setBaneado(true); // Lo marcamos como baneado en MySQL
+            // Opcional: Podrías cambiarle el rango a "BANEADO" visualmente
+            // jugador.setRango("BANEADO");
+            return jugadorRepository.save(jugador);
+        }).orElse(null);
+    }
 }

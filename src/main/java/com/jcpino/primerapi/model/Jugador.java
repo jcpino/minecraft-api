@@ -2,31 +2,31 @@ package com.jcpino.primerapi.model;
 
 import jakarta.persistence.*;
 
-@Entity // Le dice a Spring: "Esto es un archivo de guardado (tabla) en MySQL"
-@Table(name = "jugadores") // El nombre de la tabla en la base de datos
+@Entity
+@Table(name = "jugadores")
 public class Jugador {
 
-    @Id // La llave primaria (el ID único del jugador)
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Se auto-incrementa (1, 2, 3...)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nombre; // Ej: "Steve"
+    private String nombre;
+    private String rango;
+    private String ultimaConexion;
 
-    private String rango; // Ej: "VIP", "ADMIN", "JUGADOR"
+    // LA NUEVA VARIABLE:
+    private boolean baneado;
 
-    private String ultimaConexion; // Ej: "2023-10-27 15:30:00" (Lo dejamos como texto para no enredarnos ahora)
-
-    // Constructor vacío (Obligatorio para que JPA pueda leer el archivo)
     public Jugador() {}
 
-    // Constructor para crear un jugador rápido
     public Jugador(String nombre, String rango, String ultimaConexion) {
         this.nombre = nombre;
         this.rango = rango;
         this.ultimaConexion = ultimaConexion;
+        this.baneado = false; // Por defecto, todos entran sin ban
     }
 
-    // Getters y Setters (Para que el resto del sistema pueda leer y modificar estos datos)
+    // Getters y Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -38,4 +38,8 @@ public class Jugador {
 
     public String getUltimaConexion() { return ultimaConexion; }
     public void setUltimaConexion(String ultimaConexion) { this.ultimaConexion = ultimaConexion; }
+
+    // NUEVOS MÉTODOS:
+    public boolean isBaneado() { return baneado; }
+    public void setBaneado(boolean baneado) { this.baneado = baneado; }
 }
